@@ -1,0 +1,22 @@
+services:
+  db:
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+
+  web:
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - SITE_URL=${SITE_URL}
+      - DJANGO_DB_PASSWORD=${POSTGRES_PASSWORD}
+
+  celery_worker:
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DJANGO_DB_PASSWORD=${POSTGRES_PASSWORD}
+
+  celery_beat:
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DJANGO_DB_PASSWORD=${POSTGRES_PASSWORD}
