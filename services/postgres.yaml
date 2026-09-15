@@ -1,11 +1,12 @@
 services:
   db:
     image: docker.io/postgres:15-alpine
+    shm_size: 256mb
     logging:
       driver: json-file
       options:
-        max-size: 10m
-        max-file: 3
+        max-size: 5m
+        max-file: 5
     env_file:
       - ../config/prod.env
     environment:
@@ -27,9 +28,6 @@ services:
       "-c", "max_connections=30"
     ]
     healthcheck:
-      # Check via TCP: the server that runs the (dev) initdb scripts on the
-      # first start only listens on the unix socket, so without -h the health
-      # check reports ready before the other containers can actually connect.
       test: ["CMD-SHELL", "pg_isready -h localhost -U \"$$POSTGRES_USER\""]
       interval: 10s
       timeout: 5s
